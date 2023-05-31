@@ -1,5 +1,3 @@
-import type { Quote } from '../components/application';
-
 const filterQuotes = (quotes: Quote[], filters: QuoteFilters) => {
   const content = filters.content.toLowerCase();
   const source = filters.source.toLowerCase();
