@@ -1,4 +1,10 @@
-import { Dispatch, PropsWithChildren, SetStateAction, useState } from 'react';
+import {
+  Dispatch,
+  FormEventHandler,
+  PropsWithChildren,
+  SetStateAction,
+  useState,
+} from 'react';
 
 import { fetchQuotes } from '../lib/fetch-quotes';
 
@@ -9,14 +15,14 @@ type QuotesProps = {
 const Quotes = ({ children, setQuotes }: PropsWithChildren<QuotesProps>) => {
   const [count, setCount] = useState<number>(10);
 
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    fetchQuotes(count).then(setQuotes);
+  };
+
   return (
     <section className="flex flex-col gap-8">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          fetchQuotes(count).then(setQuotes);
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <label htmlFor="number-of-quotes-to-load" className="block">
           Number of Quotes to Load
         </label>
@@ -33,7 +39,7 @@ const Quotes = ({ children, setQuotes }: PropsWithChildren<QuotesProps>) => {
           <button type="submit">Load Quotes</button>
         </div>
       </form>
-      <div className="grid grid-cols-2 gap-4">{children}</div>
+      {children}
     </section>
   );
 };

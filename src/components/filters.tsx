@@ -1,43 +1,34 @@
+import { ChangeEventHandler, Dispatch, SetStateAction } from 'react';
+
+import Filter from './filter';
+
 type QuoteFilterProps = {
   filters: QuoteFilters;
-  setFilters: any; // Change me!
+  setFilters: Dispatch<SetStateAction<QuoteFilters>>;
 };
 
 const QuoteFilter = ({ filters, setFilters }: QuoteFilterProps) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setFilters((filters) => ({
+      ...filters,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   return (
     <section className="flex gap-4">
-      <label htmlFor="content-filter">
-        Filter by quote content
-        <input
-          id="content-filter"
-          name="content"
-          value={filters.content}
-          onChange={(e) =>
-            setFilters((filters: any /* Ugh. */) => ({
-              ...filters,
-              [e.target.name]: e.target.value,
-            }))
-          }
-          // 👆 This feels like duplicate code.
-          placeholder="Filter by quote content"
-        />
-      </label>
-      <label htmlFor="source-filter">
-        Filter by source
-        <input
-          id="source-filter"
-          name="source"
-          value={filters.source}
-          onChange={(e) =>
-            setFilters((filters: any /* Ugh. */) => ({
-              ...filters,
-              [e.target.name]: e.target.value,
-            }))
-          }
-          // 👆 This feels like duplicate code.
-          placeholder="Filter by source"
-        />
-      </label>
+      <Filter
+        key="content-filter"
+        filterBy="content"
+        value={filters.content}
+        onChange={handleChange}
+      />
+      <Filter
+        key="source-filter"
+        filterBy="source"
+        value={filters.source}
+        onChange={handleChange}
+      />
     </section>
   );
 };

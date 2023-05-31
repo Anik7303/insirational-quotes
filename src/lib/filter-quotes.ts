@@ -1,4 +1,4 @@
-const filterQuotes = (quotes: Quote[], filters: QuoteFilters) => {
+export const filterQuotes = (quotes: Quote[], filters: QuoteFilters) => {
   const content = filters.content.toLowerCase();
   const source = filters.source.toLowerCase();
 
@@ -13,5 +13,3 @@ const filterQuotes = (quotes: Quote[], filters: QuoteFilters) => {
     return true;
   });
 };
-
-export default filterQuotes;
