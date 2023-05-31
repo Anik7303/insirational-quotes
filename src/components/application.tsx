@@ -21,7 +21,10 @@ const fetchPosts = async (count: number) => {
 const Application = () => {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [count, setCount] = useState(10);
-  const [filters, setFilters] = useState({ content: '', source: '' });
+  const [filters, setFilters] = useState<QuoteFilters>({
+    content: '',
+    source: '',
+  });
 
   const visibleQuotes = useMemo(
     () => filterQuotes(quotes, filters),
@@ -29,7 +32,7 @@ const Application = () => {
   );
 
   return (
-    <main className="w-full max-w-2xl py-16 mx-auto">
+    <main className="mx-auto w-full max-w-2xl py-16">
       <Quotes
         count={count}
         onChange={(e) => setCount(parseInt(e.target.value))}
